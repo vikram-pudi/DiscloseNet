@@ -16,7 +16,15 @@ web2py/applications directory as a folder named 'publications' (for
 e.g.). Then go into publications/models directory and edit config.py to 
 configure it for your organization/institute.
 
-Finally, start web2py and access your website at: http://your_web2py_server/publications
+Then, start web2py and access your website at: http://your_web2py_server/publications
+
+The first thing to do is to initialize the website by accessing:
+
+http://[your_web2py_server]/publications/default/initialize
+
+This will create the initial users who are specified in the 
+configuration file as moderators with password 'abc'. Once a moderator 
+logs in they can change their password, add more users, and so on.
 
 ## Details of the hosted website and its moderation
 

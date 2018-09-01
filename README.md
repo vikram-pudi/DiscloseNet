@@ -59,7 +59,12 @@ faculty-in-charge may serve as a publications moderator to ensure that
 technical reports uploaded meet a minimum standard set by the 
 institute.
 
-DiscloseNet is released under the GPLv3 open source license. 
+The default centres/subject-areas can be changed by moderators. This is 
+best done initially, at installation, and is best not changed 
+frequently, and arbitrarily after that, as it may make the subject-area 
+of existing publications to become invalid.
+
+*License:* DiscloseNet is released under the GPLv3 open source license. 
 Additionally, you may not modify or remove the notices about 
 DiscloseNet present on the help page of the website that is served by 
 this software. More details of the license are in the file: LICENSE.

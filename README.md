@@ -16,7 +16,7 @@ web2py/applications directory as a folder named 'publications' (for
 e.g.). Then go into publications/models directory and edit config.py to 
 configure it for your organization/institute.
 
-Then, start web2py and access your website at: http://your_web2py_server/publications
+Then, start web2py and access your website at: http://[your_web2py_server]/publications
 
 The first thing to do is to initialize the website by accessing:
 

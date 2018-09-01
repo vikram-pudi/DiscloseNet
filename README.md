@@ -12,8 +12,8 @@ deployment chapter of the web2py book for details on doing this. It is available
 http://web2py.com/book
 
 Once web2py is hosted, this application may be extracted into the 
-web2py/applications directory as a folder named 'publications' (for 
-e.g.). Then go into publications/models directory and edit config.py to 
+web2py/applications as a sub-folder named 'publications' (for 
+e.g.). Then go into publications/models and edit config.py to 
 configure it for your organization/institute.
 
 Then, start web2py and access your website at: http://[your_web2py_server]/publications

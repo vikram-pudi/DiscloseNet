@@ -7,16 +7,16 @@ institute.
 ## Installation
 
 A system must be configured to host web2py applications. See the 
-deployment chapter of http:/web2py.com/book for details on doing this.
+deployment chapter of the web2py book for details on doing this. It is available here:
+
+http:/web2py.com/book
 
 Once web2py is hosted, this application may be extracted into the 
 web2py/applications directory as a folder named 'publications' (for 
 e.g.). Then go into publications/models directory and edit config.py to 
 configure it for your organization/institute.
 
-Finally, start web2py and access your website at:
-
-http://your_web2py_server/publications
+Finally, start web2py and access your website at: http://your_web2py_server/publications
 
 ## Details of the hosted website and its moderation
 

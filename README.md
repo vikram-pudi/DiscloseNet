@@ -9,7 +9,7 @@ institute.
 A system must be configured to host web2py applications. See the 
 deployment chapter of the web2py book for details on doing this. It is available here:
 
-http:/web2py.com/book
+http://web2py.com/book
 
 Once web2py is hosted, this application may be extracted into the 
 web2py/applications directory as a folder named 'publications' (for 

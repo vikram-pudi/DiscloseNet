@@ -1,12 +1,12 @@
 # DiscloseNet
 
-DiscloseNet is a software for hosting a website to serve as a public 
+DiscloseNet is a software for hosting a website to serve as a *public 
 institute repository of academic research publications of the 
-institute.
+institute*.
 
 ## Installation
 
-A system must be configured to host web2py applications. See the 
+A computer/server must be configured to host web2py applications. See the 
 *deployment chapter* of the web2py book for details on doing this. The book is available here:
 
 http://web2py.com/book

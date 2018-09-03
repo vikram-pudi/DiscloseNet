@@ -11,7 +11,7 @@ A computer/server must be configured to host web2py applications. See the
 
 http://web2py.com/book
 
-Once web2py is hosted, the DiscloseNet application may be downloaded and extracted into the 
+Once web2py is hosted, the DiscloseNet application may be downloaded and extracted into 
 web2py/applications as a sub-folder named 'publications' (for 
 e.g.). Then go into publications/private and edit appconfig.ini to 
 configure it for your organization/institute.

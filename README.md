@@ -1,30 +1,22 @@
 # DiscloseNet
 
-DiscloseNet is a software for hosting a website to serve as an 
+DiscloseNet is a software for hosting a website to serve as a public 
 institute repository of academic research publications of the 
 institute.
 
 ## Installation
 
 A system must be configured to host web2py applications. See the 
-deployment chapter of the web2py book for details on doing this. It is available here:
+*deployment chapter* of the web2py book for details on doing this. The book is available here:
 
 http://web2py.com/book
 
 Once web2py is hosted, this application may be extracted into the 
 web2py/applications as a sub-folder named 'publications' (for 
-e.g.). Then go into publications/models and edit config.py to 
+e.g.). Then go into publications/private and edit appconfig.ini to 
 configure it for your organization/institute.
 
 Then, start web2py and access your website at: http://[your_web2py_server]/publications
-
-The first thing to do is to initialize the website by accessing:
-
-http://[your_web2py_server]/publications/default/initialize
-
-This will create the initial users who are specified in the 
-configuration file as moderators with password 'abc'. Once a moderator 
-logs in they can change their password, add more users, and so on.
 
 ## Details of the hosted website and its moderation
 
@@ -51,8 +43,8 @@ not show theses, which may be seen/searched separately.
 
 *Adding Content:* The website enables designated institute admin 
 personnel and/or faculty members to add content. The content consists 
-of research publications, each of which can be either a book, a journal 
-paper, a conference paper, a technical report, or a PhD or master's 
+of research publications, each of which can be either a book, journal 
+paper, conference paper, technical report, or a PhD or master's 
 thesis. Each publication consists of one or more authors. A thesis may 
 have one or more advisors.
 
@@ -67,8 +59,8 @@ faculty-in-charge may serve as a publications moderator to ensure that
 technical reports uploaded meet a minimum standard set by the 
 institute.
 
-The default centres/subject-areas can be changed by moderators. This is 
-best done initially, at installation, and is best not changed 
+The centres/subject-areas can be changed by moderators. This is 
+best done initially, at installation time, and is best not changed 
 frequently, and arbitrarily after that, as it may make the subject-area 
 of existing publications to become invalid.
 

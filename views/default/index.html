@@ -1,0 +1,51 @@
+{{left_sidebar_enabled=True}}
+{{extend 'layout.html'}}
+{{include 'default/show_pub.html'}}
+
+
+<p class="small"><b><u>Copyright Notice:</u></b> This material is presented to ensure timely dissemination of scholarly and
+technical work on a non-commercial basis. Copyright and all rights therein are
+retained by authors or by other copyright holders. All persons copying this
+information are expected to adhere to the terms and constraints invoked by each
+author's copyright. These works may not be reposted without the explicit
+permission of the copyright holder.</p>
+<br />
+<center>
+    {{=form}}
+</center>
+
+{{pubs_present = False}}
+
+{{types = range(len(typenames))}}
+{{for t in types:}}
+    {{if t in pubs and pubs[t]:}}
+        {{pubs_present = True}}
+        {{even = True}}
+        {{if t==1:}}<h2>Papers</h2>
+        {{elif t != 2 and t != 3:}}<h2>{{=typenames[t]}}</h2>
+        {{pass}}
+        <ol>
+        {{for i in pubs[t]:}}
+        {{if even:}}<li class="alt1">{{else:}}<li class="alt2">{{pass}}
+        {{even = not even}}
+           {{if t==1:}}
+              {{if i.has_key('journal'):}}
+                  {{t1=1}}
+              {{elif i.has_key('conference'):}}
+                  {{t1=2}}
+              {{else:}}
+                  {{t1=3}}
+              {{pass}}
+              {{show_pub(i,t1)}}
+           {{else:}}
+              {{show_pub(i,t)}}
+           {{pass}}
+        </li>
+        {{pass}}
+        </ol>
+    {{pass}}
+{{pass}}
+
+{{if not pubs_present:}}
+<h2>No publications.</h2>
+{{pass}}

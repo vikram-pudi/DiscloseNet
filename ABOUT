@@ -1,0 +1,14 @@
+DiscloseNet is a software for hosting a website to serve as a public
+institute repository of academic research publications of the 
+institute.
+
+The website is designed so that _all_ visitors may view its content, 
+which consists of research publications. The software allows content to 
+be searched easily by centre (subject-area / department), content-type 
+(book, thesis, etc.), author and date range. It allows teams to add and 
+moderate the content. For more details see the README.txt file.
+
+DiscloseNet is released under the GPLv3 open source license. For more 
+details, see the file: LICENSE.
+
+DiscloseNet is developed with web2py/python.

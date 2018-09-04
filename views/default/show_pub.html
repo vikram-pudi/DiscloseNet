@@ -1,0 +1,53 @@
+
+{{def show_pub(i,type):}}
+  {{if type == 0:}} <!-- book -->
+    <b>{{=A(i.title,_href=URL(r=request,f='view_publication/book/%s'%i.id))}}</b>
+    {{if i.edition and i.edition != 1:}}edition {{=i.edition}}{{pass}},
+    {{if i.edited:}} Edited by {{pass}}{{if i.pubid in authors:}}{{=','.join(authors[i.pubid])}}{{else:}}'No authors!'{{pass}},
+    {{if i.publisher:}}<i>{{=i.publisher}}</i>,{{pass}}
+    {{if i.volume:}}<i>{{=i.volume}}</i>,{{pass}}
+    {{if i.series:}}<i>{{=i.series}}</i>,{{pass}}
+    {{=i.xdate.year}}.<br />
+    Book no: <font color="green">IIIT/Bk/{{=i.xdate.year}}/{{=i.num}}</font>
+    {{if i.pdf:}}, ({{=A('pdf',_href=URL(r=request,f='download',args=i.pdf))}}){{pass}}
+  {{elif type == 1:}} <!-- article -->
+    <b>{{=A(i.title,_href=URL(r=request,f='view_publication/article/%s'%i.id))}}</b>,
+    {{if i.pubid in authors:}}{{=','.join(authors[i.pubid])}}{{else:}}'No authors!'{{pass}},
+    {{if i.journal:}}<i>{{=XML(i.journal)}}</i>,{{pass}}
+    {{if i.volume:}}<i>{{=i.volume}}</i>,{{pass}}
+    {{if i.volume_number:}}<i>{{=i.volume_number}}</i>,{{pass}}
+    {{=months[i.xdate.month-1] if i.xdate else '?!'}} {{=i.xdate.year  if i.xdate else '?!'}}
+    {{if i.firstpage:}}:{{=i.firstpage}}{{pass}}{{if i.lastpage:}}-{{=i.lastpage}}{{pass}}.<br />
+    Report no: <font color="green">IIIT/TR/{{=i.xdate.year  if i.xdate else '?!'}}/{{=i.num}}</font>
+    {{if i.pdf:}}, ({{=A('pdf',_href=URL(r=request,f='download',args=i.pdf))}}){{pass}}
+  {{elif type == 2:}} <!-- inproceedings -->
+    <b>{{=A(i.title,_href=URL(r=request,f='view_publication/inproceedings/%s'%i.id))}}</b>,
+    {{if i.pubid in authors:}}{{=','.join(authors[i.pubid])}}{{else:}}'No authors!'{{pass}},
+    {{if i.conference:}}<i>{{=XML(i.conference)}} {{if i.confabbr:}}({{if i.confurl:}}<a href="{{=i.confurl}}">{{pass}}{{=i.confabbr}} {{=i.xdate.year}}{{if i.confurl:}}</a>{{pass}}){{pass}}</i>,{{pass}}</i><br />
+    {{=months[i.xdate.month-1]}} {{=i.xdate.year}}
+    {{if i.firstpage:}}:{{=i.firstpage}}{{pass}}{{if i.lastpage:}}-{{=i.lastpage}}{{pass}}
+    {{if i.address:}}, {{=i.address}}{{pass}}.<br />
+    Report no: <font color="green">IIIT/TR/{{=i.xdate.year}}/{{=i.num}}</font>
+    {{if i.pdf:}}, ({{=A('pdf',_href=URL(r=request,f='download',args=i.pdf))}}){{pass}}
+  {{elif type == 3:}} <!-- techreport -->
+    <b>{{=A(i.title,_href=URL(r=request,f='view_publication/techreport/%s'%i.id))}}</b>,
+    {{if i.pubid in authors:}}{{=','.join(authors[i.pubid])}}{{else:}}'No authors!'{{pass}},
+    {{=months[i.xdate.month-1]}} {{=i.xdate.year}}.<br />
+    Report no: <font color="green">IIIT/TR/{{=i.xdate.year}}/{{=i.num}}</font>
+    {{if i.pdf:}}, ({{=A('pdf',_href=URL(r=request,f='download',args=i.pdf))}}){{pass}}
+  {{elif type == 4:}} <!-- mastersthesis -->
+    <b>{{=A(i.title,_href=URL(r=request,f='view_publication/mastersthesis/%s'%i.id))}}</b>,
+    {{if i.pubid in authors:}}{{=','.join(authors[i.pubid])}}{{else:}}'No authors!'{{pass}},
+    {{=months[i.xdate.month-1]}} {{=i.xdate.year}}.<br />
+    {{if i.pubid in advisors:}}Advisor:{{=','.join(advisors[i.pubid])}}{{else:}}'No advisors!'{{pass}}<br />
+    Report no: <font color="green">IIIT/TH/{{=i.xdate.year}}/{{=i.num}}</font>
+    {{if i.pdf:}}, ({{=A('pdf',_href=URL(r=request,f='download',args=i.pdf))}}){{pass}}
+  {{elif type == 5:}} <!-- phdthesis -->
+    <b>{{=A(i.title,_href=URL(r=request,f='view_publication/phdthesis/%s'%i.id))}}</b>,
+    {{if i.pubid in authors:}}{{=','.join(authors[i.pubid])}}{{else:}}'No authors!'{{pass}},
+    {{=months[i.xdate.month-1]}} {{=i.xdate.year}}.<br />
+    {{if i.pubid in advisors:}}Advisor:{{=','.join(advisors[i.pubid])}}{{else:}}'No advisors!'{{pass}}<br />
+    Report no: <font color="green">IIIT/TH/{{=i.xdate.year}}/{{=i.num}}</font>
+    {{if i.pdf:}}, ({{=A('pdf',_href=URL(r=request,f='download',args=i.pdf))}}){{pass}}
+  {{pass}}
+{{pass}}

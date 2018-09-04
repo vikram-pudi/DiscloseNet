@@ -1,0 +1,173 @@
+{{extend 'layout.html'}}
+
+{{def footer_links(i,table,multiauthor=True):}}
+   <center>
+   <table>
+   <tr>
+   <td>{{=A('Edit this publication',_href=URL(r=request,f='update_publication',args=[table,i.id]))}}</td>
+   {{if multiauthor:}}
+      <td>{{=A('Add author',_href=URL(r=request,f='add_author',vars=dict(pubid=i.pubid,nextlink='view_publication/%s/%s'%(table,i.id))))}}</td>
+      <td>{{=A('Remove author',_href=URL(r=request,f='remove_author',vars=dict(pubid=i.pubid,nextlink='view_publication/%s/%s'%(table,i.id))))}}</td>
+      <td>{{=A('Change type',_href=URL(r=request,f='change_type',vars=dict(table=table,tid=i.id)))}}</td>
+   {{pass}}
+   </tr>
+   </table>
+   </center>
+{{pass}}
+
+{{def show_pub_details(i,type):}}
+  {{if type == 0:}} <!-- book -->
+    <h1>{{=i.title}}</h1>
+    <br />
+    {{if i.edition:}}<b>Edition:</b>> {{=i.edition}}<br />{{pass}}
+    {{if i.pubid in authors:}}<b>Authors:</b> <i>{{=','.join(authors[i.pubid])}}{{else:}}'No authors!'{{pass}}</i><br />
+{{if auth.has_membership(auth.id_group('pub_moderator')):}}
+    {{if i.uploaded_by:}}<b>Uploaded by:</b> {{=i.uploaded_by}}<br />{{pass}}  
+    {{if i.upload_date:}}<b>Uploaded on:</b> {{=i.upload_date}}<br />{{pass}}
+    {{pass}}
+    {{if i.publisher:}}<b>Publisher:</b> {{=i.publisher}}<br />{{pass}}
+    {{if i.volume:}}<b>Volume:</b> <i>{{=i.volume}}</i><br />{{pass}}
+    {{if i.series:}}<b>Series:</b> <i>{{=i.series}}</i><br />{{pass}}
+    <b>Year:</b> {{=i.xdate.year}}<br />
+    <b>Book no:</b> <font color="green">{{=inst_abbr}}/Bk/{{=i.xdate.year}}/{{=i.num}}</font><br />
+    {{if i.abstract:}}<h2>Abstract</h2> <p>{{=XML(i.abstract)}}</p><br />{{pass}}
+    {{if i.pdf:}}<b>Full book:</b> {{=A('pdf',_href=URL(r=request,f='download',args=i.pdf))}}<br />{{pass}}
+    {{if auth.is_logged_in():}}
+      {{if i.ppt:}}<b>Presentation:</b> {{=A('download',_href=URL(r=request,f='download',args=i.ppt))}}<br />{{pass}}
+      {{if i.pdfsource:}}<b>Source (e.g. LaTeX):</b> {{=A('download',_href=URL(r=request,f='download',args=i.pdfsource))}}<br />{{pass}}
+      {{if i.programs:}}<b>Programs:</b> {{=A('download',_href=URL(r=request,f='download',args=i.programs))}}<br />{{pass}}
+    {{pass}}
+    {{if i.bookurl:}}<a href="{{=i.bookurl}}">More details</a><br />{{pass}}
+    {{if i.subjectarea:}}<br />Centre for {{=db.subject[i.subjectarea].name}}{{pass}}
+    {{if auth.has_membership(auth.id_group('pub_moderator')) or (auth.is_logged_in() and (auth.user.id in authorids) and auth.has_membership(auth.id_group('faculty'))):}}
+       <br /><br />
+       {{footer_links(i,'book')}}
+    {{pass}}
+  {{elif type == 1:}} <!-- article -->
+    <h1>{{=i.title}}</h1>
+    <br />
+    {{if i.pubid in authors:}}<b>Authors:</b> <i>{{=','.join(authors[i.pubid])}}{{else:}}'No authors!'{{pass}}</i><br />
+{{if auth.has_membership(auth.id_group('pub_moderator')):}}
+    {{if i.uploaded_by:}}<b>Uploaded by:</b> {{=i.uploaded_by}}<br />{{pass}}  
+    {{if i.upload_date:}}<b>Uploaded on:</b> {{=i.upload_date}}<br />{{pass}} 
+    {{pass}}
+    {{if i.journal:}}<b>Journal:</b> {{=XML(i.journal)}} {{if i.journalurl:}}(<a href="{{=i.journalurl}}">link</a>){{pass}}<br />{{pass}}
+    {{if i.volume:}}<b>Volume:</b> <i>{{=i.volume}}</i><br />{{pass}}
+    {{if i.volume_number:}}<b>Volume Number:</b> <i>{{=i.volume_number}}</i><br />{{pass}}
+    {{if i.firstpage:}}<b>Pages:</b> {{=i.firstpage}}{{pass}}{{if i.lastpage:}}-{{=i.lastpage}}{{pass}}<br />
+    <b>Date:</b> {{=i.xdate}}<br />
+    <b>Report no:</b> <font color="green">{{=inst_abbr}}/TR/{{=i.xdate.year}}/{{=i.num}}</font><br />
+    {{if i.abstract:}}<h2>Abstract</h2> <p>{{=XML(i.abstract)}}</p><br />{{pass}}
+    {{if i.pdf:}}<b>Full article:</b> {{=A('pdf',_href=URL(r=request,f='download',args=i.pdf))}}<br />{{pass}}
+    {{if auth.is_logged_in():}}
+      {{if i.ppt:}}<b>Presentation:</b> {{=A('download',_href=URL(r=request,f='download',args=i.ppt))}}<br />{{pass}}
+      {{if i.pdfsource:}}<b>Source (e.g. LaTeX):</b> {{=A('download',_href=URL(r=request,f='download',args=i.pdfsource))}}<br />{{pass}}
+      {{if i.programs:}}<b>Programs:</b> {{=A('download',_href=URL(r=request,f='download',args=i.programs))}}<br />{{pass}}
+    {{pass}}
+    {{if i.subjectarea:}}<br />Centre for {{=db.subject[i.subjectarea].name}}{{pass}}
+    {{if auth.has_membership(auth.id_group('pub_moderator')) or (auth.is_logged_in() and (auth.user.id in authorids) and auth.has_membership(auth.id_group('faculty'))):}}
+       <br /><br />
+       {{footer_links(i,'article')}}
+    {{pass}}
+  {{elif type == 2:}} <!-- inproceedings -->
+    <h1>{{=i.title}}</h1>
+    <br />
+    {{if i.pubid in authors:}}<b>Authors:</b> <i>{{=','.join(authors[i.pubid])}}{{else:}}'No authors!'{{pass}}</i><br />
+{{if auth.has_membership(auth.id_group('pub_moderator')):}}
+    {{if i.uploaded_by:}}<b>Uploaded by:</b> {{=i.uploaded_by}}<br />{{pass}}  
+    {{if i.upload_date:}}<b>Uploaded on:</b> {{=i.upload_date}}<br />{{pass}}
+    {{pass}}
+    {{if i.conference:}}<b>Conference:</b> {{=XML(i.conference)}} {{if i.confabbr:}}({{if i.confurl:}}<a href="{{=i.confurl}}">{{pass}}{{=i.confabbr}} {{=i.xdate.year}}{{if i.confurl:}}</a>{{pass}}){{pass}}<br />{{pass}}
+    {{if i.firstpage:}}<b>Pages:</b> {{=i.firstpage}}{{pass}}{{if i.lastpage:}}-{{=i.lastpage}}<br />{{pass}}
+    {{if i.address:}}<b>Location</b> {{=i.address}}{{pass}}<br />
+    <b>Date:</b> {{=i.xdate}}<br />
+    <b>Report no:</b> <font color="green">{{=inst_abbr}}/TR/{{=i.xdate.year}}/{{=i.num}}</font><br />
+    {{if i.abstract:}}<h2>Abstract</h2> <p>{{=XML(i.abstract)}}</p><br />{{pass}}
+    {{if i.pdf:}}<b>Full paper:</b> {{=A('pdf',_href=URL(r=request,f='download',args=i.pdf))}}<br />{{pass}}
+    {{if auth.is_logged_in():}}
+      {{if i.ppt:}}<b>Presentation:</b> {{=A('download',_href=URL(r=request,f='download',args=i.ppt))}}<br />{{pass}}
+      {{if i.pdfsource:}}<b>Source (e.g. LaTeX):</b> {{=A('download',_href=URL(r=request,f='download',args=i.pdfsource))}}<br />{{pass}}
+      {{if i.programs:}}<b>Programs:</b> {{=A('download',_href=URL(r=request,f='download',args=i.programs))}}<br />{{pass}}
+    {{pass}}
+    {{if i.subjectarea:}}<br />Centre for {{=db.subject[i.subjectarea].name}}{{pass}}
+    {{if auth.has_membership(auth.id_group('pub_moderator')) or (auth.is_logged_in() and (auth.user.id in authorids) and auth.has_membership(auth.id_group('faculty'))):}}
+       <br /><br />
+       {{footer_links(i,'inproceedings')}}
+    {{pass}}
+  {{elif type == 3:}} <!-- techreport -->
+    <h1>{{=i.title}}</h1>
+    <br />
+    {{if i.pubid in authors:}}<b>Authors:</b> <i>{{=','.join(authors[i.pubid])}}{{else:}}'No authors!'{{pass}}</i><br />
+{{if auth.has_membership(auth.id_group('pub_moderator')):}}
+    {{if i.uploaded_by:}}<b>Uploaded by:</b> {{=i.uploaded_by}}<br />{{pass}}  
+    {{if i.upload_date:}}<b>Uploaded on:</b> {{=i.upload_date}}<br />{{pass}}
+    {{pass}}
+    <b>Date:</b> {{=i.xdate}}<br />
+    <b>Report no:</b> <font color="green">{{=inst_abbr}}/TR/{{=i.xdate.year}}/{{=i.num}}</font><br />
+    {{if i.abstract:}}<h2>Abstract</h2> <p>{{=XML(i.abstract)}}</p><br />{{pass}}
+    {{if i.pdf:}}<b>Full report:</b> {{=A('pdf',_href=URL(r=request,f='download',args=i.pdf))}}<br />{{pass}}
+    {{if auth.is_logged_in():}}
+      {{if i.ppt:}}<b>Presentation:</b> {{=A('download',_href=URL(r=request,f='download',args=i.ppt))}}<br />{{pass}}
+      {{if i.pdfsource:}}<b>Source (e.g. LaTeX):</b> {{=A('download',_href=URL(r=request,f='download',args=i.pdfsource))}}<br />{{pass}}
+      {{if i.programs:}}<b>Programs:</b> {{=A('download',_href=URL(r=request,f='download',args=i.programs))}}<br />{{pass}}
+    {{pass}}
+    {{if i.subjectarea:}}<br />Centre for {{=db.subject[i.subjectarea].name}}{{pass}}
+    {{if auth.has_membership(auth.id_group('pub_moderator')) or (auth.is_logged_in() and (auth.user.id in authorids) and auth.has_membership(auth.id_group('faculty'))):}}
+       <br /><br />
+       {{footer_links(i,'techreport')}}
+    {{pass}}
+  {{elif type == 4:}} <!-- mastersthesis -->
+    <h1>{{=i.title}}</h1>
+    <br />
+    {{if i.pubid in authors:}}<b>Author:</b> <i>{{=','.join(authors[i.pubid])}}{{else:}}'No authors!'{{pass}}</i><br />
+{{if auth.has_membership(auth.id_group('pub_moderator')):}}
+    {{if i.uploaded_by:}}<b>Uploaded by:</b> {{=i.uploaded_by}}<br />{{pass}}  
+    {{if i.upload_date:}}<b>Uploaded on:</b> {{=i.upload_date}}<br />{{pass}}
+    {{pass}}
+    <b>Date:</b> {{=i.xdate}}<br />
+    <b>Report no:</b> <font color="green">{{=inst_abbr}}/TH/{{=i.xdate.year}}/{{=i.num}}</font><br />
+    {{if i.pubid in advisors:}}<b>Advisor:</b><i>{{=','.join(advisors[i.pubid])}}{{else:}}'No advisor!'{{pass}}</i><br />
+    {{if i.abstract:}}<h2>Abstract</h2> <p>{{=XML(i.abstract)}}</p><br />{{pass}}
+    {{if i.pdf:}}<b>Full thesis:</b> {{=A('pdf',_href=URL(r=request,f='download',args=i.pdf))}}<br />{{pass}}
+    {{if auth.is_logged_in():}}
+      {{if i.ppt:}}<b>Presentation:</b> {{=A('download',_href=URL(r=request,f='download',args=i.ppt))}}<br />{{pass}}
+      {{if i.pdfsource:}}<b>Source (e.g. LaTeX):</b> {{=A('download',_href=URL(r=request,f='download',args=i.pdfsource))}}<br />{{pass}}
+      {{if i.programs:}}<b>Programs:</b> {{=A('download',_href=URL(r=request,f='download',args=i.programs))}}<br />{{pass}}
+    {{pass}}
+    {{if i.thesisurl:}}<a href="{{=i.thesisurl}}">More details</a>{{pass}}
+    {{if i.subjectarea:}}<br />Centre for {{=db.subject[i.subjectarea].name}}{{pass}}
+    {{if auth.has_membership(auth.id_group('pub_moderator')) or (auth.is_logged_in() and (auth.user.id in authorids)):}}
+       <br /><br />
+       {{footer_links(i,'mastersthesis',False)}}
+    {{pass}}
+  {{elif type == 5:}} <!-- phdthesis -->
+    <h1>{{=i.title}}</h1>
+    <br />
+    {{if i.pubid in authors:}}<b>Author:</b> <i>{{=','.join(authors[i.pubid])}}{{else:}}'No authors!'{{pass}}</i><br />
+{{if auth.has_membership(auth.id_group('pub_moderator')):}}
+    {{if i.uploaded_by:}}<b>Uploaded by:</b> {{=i.uploaded_by}}<br />{{pass}}  
+    {{if i.upload_date:}}<b>Uploaded on:</b> {{=i.upload_date}}<br />{{pass}}
+    {{pass}}
+    <b>Date:</b> {{=i.xdate}}<br />
+    <b>Report no:</b> <font color="green">{{=inst_abbr}}/TH/{{=i.xdate.year}}/{{=i.num}}</font><br />
+    {{if i.pubid in advisors:}}<b>Advisor:</b><i>{{=','.join(advisors[i.pubid])}}{{else:}}'No advisor!'{{pass}}</i><br />
+    {{if i.abstract:}}<h2>Abstract</h2> <p>{{=XML(i.abstract)}}</p><br />{{pass}}
+    {{if i.pdf:}}<b>Full thesis:</b> {{=A('pdf',_href=URL(r=request,f='download',args=i.pdf))}}<br />{{pass}}
+    {{if auth.is_logged_in():}}
+      {{if i.ppt:}}<b>Presentation:</b> {{=A('download',_href=URL(r=request,f='download',args=i.ppt))}}<br />{{pass}}
+      {{if i.pdfsource:}}<b>Source (e.g. LaTeX):</b> {{=A('download',_href=URL(r=request,f='download',args=i.pdfsource))}}<br />{{pass}}
+      {{if i.programs:}}<b>Programs:</b> {{=A('download',_href=URL(r=request,f='download',args=i.programs))}}<br />{{pass}}
+    {{pass}}
+    {{if i.thesisurl:}}<a href="{{=i.thesisurl}}">More details</a><br />{{pass}}
+    {{if i.subjectarea:}}<br />Centre for {{=db.subject[i.subjectarea].name}}{{pass}}
+    {{if auth.has_membership(auth.id_group('pub_moderator')) or (auth.is_logged_in() and (auth.user.id in authorids)):}}
+       <br /><br />
+       {{footer_links(i,'phdthesis',False)}}
+    {{pass}}
+  {{pass}}
+{{pass}}
+
+{{show_pub_details(record,type)}}
+{{if auth.has_membership(auth.id_group('pub_moderator')):}}
+{{=form}}
+{{pass}}

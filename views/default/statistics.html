@@ -1,0 +1,34 @@
+{{extend 'layout.html'}}
+<h2>Statistics</h2>
+<table>
+{{types = range(len(typenames))}}
+<th>
+<!--td>S.No</td-->
+<td>Name</td>
+{{for t in types:}}
+    <td>{{=typenames[t]}}</td>
+{{pass}}
+</th>
+{{authorlist = authors.keys()}}
+{{authorlist.sort(key=lambda a: sum(authors[a][2].values()), reverse=True)}}
+{{rank=0}}
+{{for a in authorlist:}}
+    {{d = authors[a]}}
+    <tr>
+    {{rank += 1}}
+    <td>{{=rank}}</td>
+    <td><a href="http://web2py.iiit.ac.in/research_centres/publications/index?author={{=a}}&end_date=2100-01-01&start_date=1996-01-01&_formname=no_table_create">{{=d[0]+' '+d[1]}}</a></td>
+    {{for t in types:}}
+        <td>{{if t in d[2]:}}
+                {{if t < len(typenames)-2:}}
+                    <a href="http://web2py.iiit.ac.in/research_centres/publications/index?author={{=a}}&end_date=2100-01-01&start_date=1996-01-01&type={{=typenames[t]}}&_formname=no_table_create">{{=d[2][t]}}</a>
+                {{else:}}
+                    <a href="http://web2py.iiit.ac.in/research_centres/publications/index?advisor={{=a}}&end_date=2100-01-01&start_date=1996-01-01&type={{=typenames[t]}}&_formname=no_table_create">{{=d[2][t]}}</a>
+                {{pass}}
+            {{else:}}-
+            {{pass}}</td>
+    {{pass}}
+    </tr>
+{{pass}}
+</table>
+    

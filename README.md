@@ -7,7 +7,7 @@ institute*. Its well-tested as it has been in use at [IIIT Hyderabad](http://web
 ## Installation
 
 To simply try out DiscloseNet, download [web2py source](https://mdipierro.pythonanywhere.com/examples/static/web2py_src.zip), extract it.
-Then download [DiscloseNet](https://gitlab.com/vikrampudi/publications/-/archive/master/publications-master.zip),
+Then download [DiscloseNet](https://github.com/vikram-pudi/DiscloseNet/archive/master.zip),
 extract it inside the web2py/applications folder. Rename the extracted 'publications-master' folder into
 'publications' (for e.g.).
 

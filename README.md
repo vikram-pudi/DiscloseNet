@@ -2,7 +2,7 @@
 
 DiscloseNet is a software for hosting a website to serve as a *public 
 institute repository of academic research publications of the 
-institute*.
+institute*. Its well-tested as it has been in use at [IIIT Hyderabad](http://web2py.iiit.ac.in/publications) for over a decade.
 
 ## Installation
 

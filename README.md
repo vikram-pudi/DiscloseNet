@@ -6,17 +6,25 @@ institute*.
 
 ## Installation
 
-A computer/server must be configured to host web2py applications. See the 
-*deployment chapter* of the web2py book for details on doing this. The book is available here:
+To simply try out DiscloseNet, download [web2py source](https://mdipierro.pythonanywhere.com/examples/static/web2py_src.zip), extract it.
+Then download [DiscloseNet](https://gitlab.com/vikrampudi/publications/-/archive/master/publications-master.zip),
+extract it inside the web2py/applications folder. Rename the extracted 'publications-master' folder into
+'publications' (for e.g.).
 
-http://web2py.com/book
+Then go into publications/private and edit appconfig.ini to configure it for your organization/institute.
 
-Once web2py is hosted, the DiscloseNet application may be downloaded and extracted into 
-web2py/applications as a sub-folder named 'publications' (for 
-e.g.). Then go into publications/private and edit appconfig.ini to 
-configure it for your organization/institute.
+Next, start web2py by going back into the web2py folder and run:
 
-Then, start web2py and access your website at: http://[your_web2py_server]/publications
+    python web2py.py -a ""
+
+Finally, access your website at: http://127.0.0.1:8000/publications
+
+To make your website accessible publicly like:
+
+http://[your_web2py_server]/publications
+
+you must deploy web2py publicly, perhaps behind a web-server like Apache. To do so,
+see the *deployment chapter* of the [web2py book](http://web2py.com/book) for details on doing this.
 
 ## Details of the hosted website and its moderation
 
